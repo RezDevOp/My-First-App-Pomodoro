@@ -5,17 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
   </head>
   <body>
     <div class="container">
+      <div class="reset-container">
+        <button id="reset" class="reset-button">
+          <i class="fas fa-sun"></i>
+          Reset
+        </button>
+      </div>
       <h1>Pomodoro Timer</h1>
-      <div class="timer">
-        <span id="minutes">25</span>:<span id="seconds">00</span>
+      <div id="focus-display" class="focus-display" style="display: none">
+        <p>FOCUSING ON: <span id="focus-text"></span></p>
+      </div>
+      <div class="timer-container">
+        <svg class="progress-ring" width="300" height="300">
+          <g id="tick-marks"></g>
+          <circle class="progress-ring__circle-bg" cx="150" cy="150" r="130" />
+          <circle class="progress-ring__circle" cx="150" cy="150" r="130" />
+        </svg>
+        <div class="timer">25:00</div>
       </div>
       <div class="controls">
         <button id="start">Start</button>
         <button id="pause">Pause</button>
-        <button id="reset">Reset</button>
       </div>
       <div class="mode-switches">
         <button id="pomodoro" class="active">Pomodoro</button>
@@ -23,6 +40,16 @@
         <button id="longBreak">Long Break</button>
       </div>
     </div>
+
+    <!-- Focus Input Modal -->
+    <div id="focus-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>What are you focusing on?</h2>
+        <input type="text" id="focus-input" placeholder="Enter your focus..." />
+        <button id="start-focus">Start Focusing</button>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
