@@ -31,7 +31,8 @@ let currentMode = "pomodoro";
 let currentFocus = "";
 
 // Calculate the progress ring circumference
-const circumference = 2 * Math.PI * 170; // 170 is the radius of our circle
+const radius = 130; // Match the radius in the SVG
+const circumference = 2 * Math.PI * radius;
 progressRing.style.strokeDasharray = `${circumference}`;
 progressRing.style.strokeDashoffset = `${circumference}`;
 
@@ -77,9 +78,10 @@ function updateDisplay() {
     .toString()
     .padStart(2, "0")}`;
 
-  // Update progress ring
-  const progress = timeLeft / TIMER_MODES[currentMode];
-  const offset = circumference * (1 - progress);
+  // Update progress ring - fix the progress calculation
+  const totalTime = TIMER_MODES[currentMode];
+  const progress = timeLeft / totalTime;
+  const offset = circumference * progress; // Remove the 1 - progress to make it go clockwise
   progressRing.style.strokeDashoffset = offset;
 }
 
@@ -107,7 +109,7 @@ function startTimerCountdown() {
       clearInterval(timerId);
       isRunning = false;
       // Reset progress ring
-      progressRing.style.strokeDashoffset = circumference;
+      progressRing.style.strokeDashoffset = 0; // Changed from circumference to 0
       if (currentMode === "pomodoro") {
         currentFocus = ""; // Clear focus when pomodoro ends
         focusDisplay.style.display = "none";
@@ -144,7 +146,7 @@ function resetTimer() {
   timeLeft = TIMER_MODES[currentMode];
   updateDisplay();
   // Reset progress ring
-  progressRing.style.strokeDashoffset = circumference;
+  progressRing.style.strokeDashoffset = 0; // Changed from circumference to 0
   // Reset focus
   currentFocus = "";
   focusDisplay.style.display = "none";
@@ -167,7 +169,7 @@ function switchMode(mode) {
   clearInterval(timerId);
   updateDisplay();
   // Reset progress ring
-  progressRing.style.strokeDashoffset = circumference;
+  progressRing.style.strokeDashoffset = 0; // Changed from circumference to 0
   // Update tick marks for new mode
   createTickMarks(TIMER_MODES[mode]);
 
